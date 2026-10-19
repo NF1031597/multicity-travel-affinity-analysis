@@ -218,3 +218,17 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Raw and local data
+data/
+*.csv
+*.parquet
+
+# Python
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+
+# Local configuration
+.env
+.DS_Store
