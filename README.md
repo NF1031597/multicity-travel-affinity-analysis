@@ -42,8 +42,8 @@ Frequent itemsets and association rules will be calculated using Spark-based dat
 
 ## 6. Project Progress
 
-- [ ] Data ingestion and validation
-- [ ] Transaction preparation
+- [X] Data ingestion and validation
+- [X] Transaction preparation
 - [ ] Exploratory data analysis
 - [ ] Frequent itemset discovery
 - [ ] Association rule analysis
