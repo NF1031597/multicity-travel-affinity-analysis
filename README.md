@@ -1,6 +1,6 @@
-# multicity-travel-affinity-analysis
-Travel booking affinity analysis using Databricks and PySpark
 # Multi-City Travel Booking Affinity Analysis
+Travel booking affinity analysis using Databricks and PySpark
+
 
 **Status:** In Progress  
 **Project Type:** Academic Data Analytics & Portfolio Project  
