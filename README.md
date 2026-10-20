@@ -58,6 +58,27 @@ The analysis distinguishes between single-city and multi-city trips to evaluate 
 
 Additional exploratory analysis will examine destination popularity and potential data sparsity.
 
+### Initial Data Quality and Exploratory Findings
+
+The analysis examined 1,166,835 booking records, representing 217,686 unique trips and 39,901 distinct destination city identifiers.
+
+**Data quality:** No missing values were identified in the nine dataset columns. Initial validation also found no missing or blank trip identifiers, missing city identifiers, or checkout dates preceding check-in dates.
+
+**Trip characteristics:**
+- Average unique cities per trip: 4.75
+- Minimum unique cities: 1
+- Maximum unique cities: 39
+- Multi-city trips: 212,661 (97.7%)
+- Single-city trips: 5,025 (2.3%)
+
+**Preliminary interpretation:**
+
+The distribution of trip sizes peaks at four distinct cities. Most trips contain multiple destinations, providing a substantial transaction base for identifying co-occurring cities.
+
+However, the large number of distinct destination identifiers may lead to sparse city combinations. Further analysis of city popularity and itemset frequency is required before selecting appropriate support thresholds.
+
+These findings describe historical booking patterns and do not establish causation or destination-visit order.
+
 ## 6. Project Progress
 
 - [X] Data ingestion and validation
