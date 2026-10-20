@@ -40,6 +40,24 @@ Each `utrip_id` represents one transaction, and its distinct `city_id` values re
 
 Frequent itemsets and association rules will be calculated using Spark-based data transformations compatible with Databricks serverless compute.
 
+## Exploratory Data Analysis
+
+### Trip-Size Distribution
+
+The first exploratory analysis examines the distribution of unique destination cities per trip.
+
+The analysis distinguishes between single-city and multi-city trips to evaluate the suitability of the dataset for association rule mining.
+
+**Methodology:**
+- Group booking records using `utrip_id`.
+- Count distinct `city_id` values per transaction.
+- Calculate descriptive trip-size statistics.
+- Visualize the distribution of cities per trip.
+
+**Findings:** Pending validation of the analytical results.
+
+Additional exploratory analysis will examine destination popularity and potential data sparsity.
+
 ## 6. Project Progress
 
 - [X] Data ingestion and validation
