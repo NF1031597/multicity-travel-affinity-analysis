@@ -1,254 +1,103 @@
-# Multi-City Travel Booking Affinity Analysis
-Travel booking affinity analysis using Databricks and PySpark
-
-
-**Status:** In Progress  
-**Project Type:** Academic Data Analytics & Portfolio Project  
-**Platform:** Databricks Free Edition
-
-## 1. Project Overview
-
-This project investigates patterns in multi-city travel bookings using affinity analysis and association rule mining.
-
-The objective is to identify destination cities that frequently appear together within individual trips and explore how these patterns could support travel recommendations, marketing, and personalization.
-
-## 2. Business Question
-
-Which destination cities are frequently booked together, and how can these relationships inform business decisions?
-
-## 3. Project Objectives
-
-- Prepare and validate travel-booking records.
-- Group unique destination cities by trip ID.
-- Explore trip sizes and city popularity.
-- Identify frequent city combinations.
-- Calculate support, confidence, and lift.
-- Interpret association rules in a business context.
-- Evaluate limitations and potential applications.
-
-## 4. Tools and Technologies
-
-- Databricks Free Edition
-- Python and PySpark
-- Spark SQL
-- Matplotlib (visualization)
-- Git and GitHub
-
-## 5. Analytical Methodology
-
-Each `utrip_id` represents one transaction, and its distinct `city_id` values represent the items in that transaction.
-
-Frequent itemsets and association rules will be calculated using Spark-based data transformations compatible with Databricks serverless compute.
-
-## Exploratory Data Analysis
-
-### Trip-Size Distribution
-
-The first exploratory analysis examines the distribution of unique destination cities per trip.
-
-The analysis distinguishes between single-city and multi-city trips to evaluate the suitability of the dataset for association rule mining.
-
-**Methodology:**
-- Group booking records using `utrip_id`.
-- Count distinct `city_id` values per transaction.
-- Calculate descriptive trip-size statistics.
-- Visualize the distribution of cities per trip.
-
-**Findings:** Pending validation of the analytical results.
-
-Additional exploratory analysis will examine destination popularity and potential data sparsity.
-
-### Initial Data Quality and Exploratory Findings
-
-The analysis examined 1,166,835 booking records, representing 217,686 unique trips and 39,901 distinct destination city identifiers.
-
-**Data quality:** No missing values were identified in the nine dataset columns. Initial validation also found no missing or blank trip identifiers, missing city identifiers, or checkout dates preceding check-in dates.
-
-**Trip characteristics:**
-- Average unique cities per trip: 4.75
-- Minimum unique cities: 1
-- Maximum unique cities: 39
-- Multi-city trips: 212,661 (97.7%)
-- Single-city trips: 5,025 (2.3%)
-
-**Preliminary interpretation:**
-
-The distribution of trip sizes peaks at four distinct cities. Most trips contain multiple destinations, providing a substantial transaction base for identifying co-occurring cities.
-
-However, the large number of distinct destination identifiers may lead to sparse city combinations. Further analysis of city popularity and itemset frequency is required before selecting appropriate support thresholds.
-
-These findings describe historical booking patterns and do not establish causation or destination-visit order.
-
-## 6. Project Progress
-
-- [X] Data ingestion and validation
-- [X] Transaction preparation
-- [ ] Exploratory data analysis
-- [ ] Frequent itemset discovery
-- [ ] Association rule analysis
-- [ ] Business interpretation
-- [ ] Final documentation
-
-## 7. Dataset
-
-The dataset contains travel-booking records, including trip identifiers, destination city identifiers, booking dates, traveler countries, and booking channels.
-
-**Dataset source:** To be verified.
-
-The original CSV is not included in this repository. Reproduction instructions and data requirements will be documented.
-
-## 8. Results and Business Recommendations
-
-This section will be completed after the analysis.
-
-## 9. Limitations
-
-Potential limitations include popularity bias, data sparsity, low-frequency destination combinations, and the fact that association does not establish causation.
-
-
-
-### Destination Popularity and Data Sparsity
-
-The dataset contains 39,901 distinct destination city identifiers across 217,686 unique trips.
-
-The most frequently booked destination, City ID 23921, appears in 8,205 trips, representing 3.769% of all transactions.
-
-The city frequency distribution is highly sparse:
-
-- 12,349 cities (30.9%) appear in only one trip.
-- 30,605 cities (76.7%) appear in fewer than ten trips.
-- The most popular destination appears in approximately 3.77% of transactions.
-
-These findings indicate a pronounced long-tail distribution in destination popularity, presenting challenges for frequent itemset discovery.
-
-### Frequent Itemset Mining
-
-An initial minimum support threshold of 0.1% (218 trips) was selected to explore frequent individual cities and city pairs.
-
-The analysis uses PySpark DataFrame transformations compatible with Databricks Free Edition.
-
-Cities that fail to meet the minimum support threshold are excluded from candidate pair generation. Pair support is calculated relative to all 217,686 original transactions.
-
-The resulting itemsets and threshold sensitivity will be evaluated before association rules are generated.
-
-
-### Frequent City Combinations
-
-Using a minimum support threshold of 0.1%, the analysis identified **969 frequent city pairs** across 217,686 unique trip transactions.
-
-The most frequent combination was City 55128 and City 64876, which appeared together in 4,022 trips (1.848% support).
-
-### Preliminary Association Insight
-
-For the rule **City 55128 → City 64876**:
-
-- Support: 1.85%
-- Confidence: 55.76%
-- Lift: 17.97
-
-The high lift indicates that these destinations co-occur much more frequently than would be expected from their individual booking frequencies under an independence assumption.
-
-These patterns could help identify candidates for personalized recommendations or destination bundles. However, the findings do not establish causal relationships or prove that these recommendations would increase bookings.
-
-### Association Rule Evaluation
-
-The analysis generated directional association rules from frequent city pairs identified using a minimum support threshold of 0.1%.
-
-Rules were evaluated using three metrics:
-
-- **Support:** Proportion of trips containing both destinations.
-- **Confidence:** Conditional probability that the consequent city is included when the antecedent city is present.
-- **Lift:** Strength of the association relative to the consequent city's overall frequency.
-
-Initial rule-selection thresholds were set at 20% minimum confidence and 1.2 minimum lift.
-
-Rules were ranked separately by co-booking frequency and lift to assess both their observed frequency and association strength.
-
-The next stage evaluates three selected rules and discusses potential applications in travel recommendations, destination bundles, and personalized marketing.
-
-## 8. Business Insights and Recommendations
-
-### Insight 1 — Destination Recommendation
-
-**Rule: City 64876 → City 55128**
-
-- Co-occurring trips: 4,022
-- Confidence: 59.5%
-- Lift: 17.97
-
-Approximately 59.5% of trips containing City 64876 also contain City 55128.
-
-**Business recommendation:** A travel platform could test recommending City 55128 to customers planning trips that include City 64876.
-
-### Insight 2 — Travel Package Bundling
-
-**Rule: City 18417 → City 66648**
-
-- Co-occurring trips: 3,174
-- Confidence: 80.6%
-- Lift: 30.29
-
-The high confidence indicates that these destinations frequently occur together within trips containing City 18417.
-
-**Business recommendation:** Explore combined travel packages featuring both destinations and test their commercial appeal.
-
-### Insight 3 — Targeted Personalization
-
-**Rule: City 36020 → City 45025**
-
-- Co-occurring trips: 236
-- Confidence: 95.9%
-- Lift: 513.11
-
-This rule exhibits an exceptionally high lift and confidence. However, its relatively low support of approximately 0.11% limits its potential reach and warrants additional validation.
-
-**Business recommendation:** Investigate this highly specific travel pattern as a candidate for targeted recommendations rather than mass-market campaigns.
-
-### Analytical Limitations
-
-Association rules identify co-occurrence, not causality or travel sequence.
-
-The analysis uses anonymized city identifiers, preventing direct geographical interpretation without a city reference table.
-
-The historical dataset covers 2015–2017, and discovered patterns may not reflect current travel behavior.
-
-Recommendations should be evaluated using more recent data and controlled experiments before deployment.
-
-### Frequent 3-Itemset Mining
-
-Frequent three-city combinations were investigated using an Apriori-inspired candidate-generation approach implemented with PySpark DataFrames.
-
-Candidate triples were generated from frequent city pairs. A three-city combination was considered eligible only if all its constituent pairs met the 0.1% minimum support threshold.
-
-Candidate triples were then checked against the trip-level transactions to calculate their actual frequency and support.
-
-This strategy reduces unnecessary candidate generation and is compatible with Databricks Free Edition serverless compute.
-
-### Frequent Three-City Combinations
-
-The analysis evaluated 1,092 candidate three-city itemsets and identified **405 frequent combinations** meeting the minimum support threshold of 0.1%.
-
-The strongest recurring three-city combination was:
-
-**City 18417 + City 30520 + City 66648**
-
-- Co-occurring trips: 2,571
-- Support: 1.181%
-
-These findings demonstrate how association mining can extend beyond individual destination pairs to identify recurring multi-destination booking patterns.
-
-
-## Project Visualizations
-
-### Figure 1. Distribution of Cities per Trip
-
-![Distribution of Cities per Trip](figures/trip_size_distribution.png)
-
-### Figure 2. Top 15 Destination Cities
-
-![Top 15 Destination Cities](figures/top_15_destination_cities.png)
-
-### Figure 3. Frequent Three-City Combinations
-
-![Top 10 Frequent Three-City Combinations](figures/top_10_frequent_city_triples.png)
-
+Multi-City Travel Booking Affinity Analysis
+Databricks Free Edition | PySpark | Python | Association Rules | Git & GitHub
+A reproducible exploratory analysis of historical multi-city booking patterns, using trip-level transactions to identify frequently co-booked destinations and evaluate opportunities for travel recommendations.
+
+[**View the Databricks notebook**](Multicity_Booking_Project.ipynb)
+Business question
+Which destination cities tend to appear together within the same trip, and how might those patterns inform recommendations, travel packages, or personalized marketing?
+
+This project examines co-occurrence, not travel order or causation. The findings describe historical booking behavior; proposed applications have not been commercially tested.
+Dataset and scope
+Attribute	Observed value
+Booking-level records	1,166,835
+Unique trips (utrip_id)	217,686
+Distinct destinations (city_id)	39,901
+Average unique cities per trip	4.75
+Multi-city trips	212,661 (97.7%)
+Date coverage	December 31, 2015 – February 28, 2017
+
+
+The dataset includes user_id, checkin, checkout, city_id, device_class, affiliate_id, booker_country, hotel_country, and utrip_id. Each distinct utrip_id is treated as one transaction, containing the set of distinct city_id values booked within that trip. Repeated appearances of a city within the same trip count only once.
+
+The original CSV is not distributed in this repository. Its original source and redistribution license still need confirmation. City identifiers have not been mapped to geographic names.
+Methods
+1. Data ingestion and checks: Read booking records in Databricks; inspect schema, missing values, trip IDs, city IDs, and date order. No missing values were found in the nine columns, and the targeted ID/date-order checks returned zero violations.
+2. Transaction preparation: Group by utrip_id, applying collect_set(city_id) and sorting each basket.
+3. Exploratory analysis: Study trip-size distribution, city popularity, and the long tail of infrequent destinations.
+4. Frequent itemset mining: Calculate 1- and 2-city frequencies using PySpark DataFrame operations. Generate candidate three-city combinations only when all their constituent pairs are frequent (Apriori-style pruning), then validate their trip counts.
+5. Association rules: Calculate both directions of each frequent city pair; filter and rank rules by confidence, lift, and observed frequency.
+6. Business interpretation: Evaluate three representative rules and propose testable use cases.
+The implementation uses PySpark DataFrame transformations compatible with Databricks Free Edition serverless, without relying on its unsupported Spark ML FP-Growth model.
+Measures and thresholds
+For destination set A and destination B, with N total trips:
+- Support: support(A → B) = trips containing A and B / N
+- Confidence: confidence(A → B) = trips containing A and B / trips containing A
+- Lift: lift(A → B) = confidence(A → B) / support(B)
+Parameters in the reported experiment:
+Parameter	Value
+Minimum itemset support	0.1% (at least 218 trips)
+Minimum rule confidence	20%
+Minimum rule lift	1.2
+Support denominator	All 217,686 trips
+
+
+A low support threshold was chosen for exploratory analysis because destination frequencies are sparse. These are selection thresholds, not evidence that every retained rule has predictive or commercial value.
+Key results
+Result	Count
+Frequent individual cities	815
+Frequent city pairs	969
+Candidate three-city itemsets	1,092
+Frequent three-city itemsets	405
+Directional pair-based rules before filtering	1,938
+Rules meeting confidence and lift thresholds	1,299
+
+
+Destination concentration: City 23921 appeared in 8,205 trips (3.769% support). Among all 39,901 destination IDs, 12,349 (30.9%) appeared in only one trip, and 30,605 (76.7%) appeared in fewer than ten trips. This long tail motivates careful support-threshold selection.
+
+Most frequent city pair: 55128 + 64876 appeared together in 4,022 trips (1.848% support).
+
+Most frequent city triple: 18417 + 30520 + 66648 appeared together in 2,571 trips (1.181% support).
+Visualizations
+Figure 1 — Unique destinations per trip
+
+The distribution peaks at four distinct destination cities per trip. Only 5,025 trips (2.3%) contain a single city; nearly all trips can therefore contribute to city-to-city co-occurrence analysis.
+Figure 2 — Most frequent destinations
+
+Even the most popular individual city occurs in fewer than 4% of trips, consistent with a large and sparse set of destinations.
+Figure 3 — Most frequent three-city combinations
+
+The strongest three-city combination occurs in 2,571 trips, providing an additional perspective on destination clusters beyond city pairs.
+Three business-oriented association insights
+Directional rule	Co-occurring trips	Support	Confidence	Lift	Potential application
+64876 → 55128	4,022	1.848%	59.5%	17.97	Test destination recommendations
+18417 → 66648	3,174	1.458%	80.6%	30.29	Explore multi-destination bundles
+36020 → 45025	236	0.108%	95.9%	513.11	Investigate narrowly targeted personalization
+
+
+Interpretation: A higher lift means stronger co-occurrence relative to the consequent's background frequency, not necessarily greater business reach or incremental impact. For example, 36020 → 45025 has exceptionally high confidence and lift but only 236 observed co-occurrences. The highest-frequency rules may have broader reach; rare rules require additional stability checks. A/B tests and up-to-date data would be needed before deployment.
+Reproducing the analysis
+1. Obtain the original dataset through an authorized source. The CSV is not hosted in this repository.
+2. Open Databricks Free Edition and upload the CSV to a Unity Catalog volume or accessible table.
+3. Import or open [`Multicity_Booking_Project.ipynb`](Multicity_Booking_Project.ipynb).
+4. In the first data-loading cell, replace the existing CSV/table location with your own Databricks path, for example /Volumes/<catalog>/<schema>/<volume>/multi_city_booking.csv.
+5. Verify that checkin and checkout are parsed as dates and that the key columns match the names documented above.
+6. Run the notebook from top to bottom. Compare the final audit counts with the table in this README.
+The notebook uses the Spark DataFrame API, with small aggregated results collected to Python for plotting. Exact environment configuration and data access affect reproducibility; the underlying raw dataset is a required external input.
+Limitations and possible extensions
+- Anonymized destinations: Without a reliable city-ID lookup, geographic or tourism-route interpretations cannot be confirmed.
+- Historical data: The observed patterns span 2015–2017 and may not reflect current behavior.
+- Sparsity and selection: Most destinations occur rarely, and thresholds influence which rules are reported.
+- Association is not causation: The rules do not establish visit sequence, underlying traveler motivation, or incremental recommendation effectiveness.
+- Alternative aggregations: Grouping by hotel_country may yield more stable but less geographically specific rules; this has not been tested here.
+- Segmentation: Comparing device_class or booker_country groups could reveal differences, but smaller samples may make some rules less stable; this is future work.
+- Tourism vs. routing: The available fields cannot conclusively distinguish tourism preferences from transport connections or itinerary constraints.
+Repository contents
+multicity-travel-affinity-analysis/
+├── Multicity_Booking_Project.ipynb
+├── README.md
+├── .gitignore
+└── figures/
+    ├── trip_size_distribution.png
+    ├── top_15_destination_cities.png
+    └── top_10_frequent_city_triples.png
+Project type: Academic data analytics exercise extended into a GitHub portfolio case study. This repository contains analytical code and illustrations, not a deployed recommendation system.
