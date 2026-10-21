@@ -149,3 +149,67 @@ For the rule **City 55128 → City 64876**:
 The high lift indicates that these destinations co-occur much more frequently than would be expected from their individual booking frequencies under an independence assumption.
 
 These patterns could help identify candidates for personalized recommendations or destination bundles. However, the findings do not establish causal relationships or prove that these recommendations would increase bookings.
+
+### Association Rule Evaluation
+
+The analysis generated directional association rules from frequent city pairs identified using a minimum support threshold of 0.1%.
+
+Rules were evaluated using three metrics:
+
+- **Support:** Proportion of trips containing both destinations.
+- **Confidence:** Conditional probability that the consequent city is included when the antecedent city is present.
+- **Lift:** Strength of the association relative to the consequent city's overall frequency.
+
+Initial rule-selection thresholds were set at 20% minimum confidence and 1.2 minimum lift.
+
+Rules were ranked separately by co-booking frequency and lift to assess both their observed frequency and association strength.
+
+The next stage evaluates three selected rules and discusses potential applications in travel recommendations, destination bundles, and personalized marketing.
+
+## 8. Business Insights and Recommendations
+
+### Insight 1 — Destination Recommendation
+
+**Rule: City 64876 → City 55128**
+
+- Co-occurring trips: 4,022
+- Confidence: 59.5%
+- Lift: 17.97
+
+Approximately 59.5% of trips containing City 64876 also contain City 55128.
+
+**Business recommendation:** A travel platform could test recommending City 55128 to customers planning trips that include City 64876.
+
+### Insight 2 — Travel Package Bundling
+
+**Rule: City 18417 → City 66648**
+
+- Co-occurring trips: 3,174
+- Confidence: 80.6%
+- Lift: 30.29
+
+The high confidence indicates that these destinations frequently occur together within trips containing City 18417.
+
+**Business recommendation:** Explore combined travel packages featuring both destinations and test their commercial appeal.
+
+### Insight 3 — Targeted Personalization
+
+**Rule: City 36020 → City 45025**
+
+- Co-occurring trips: 236
+- Confidence: 95.9%
+- Lift: 513.11
+
+This rule exhibits an exceptionally high lift and confidence. However, its relatively low support of approximately 0.11% limits its potential reach and warrants additional validation.
+
+**Business recommendation:** Investigate this highly specific travel pattern as a candidate for targeted recommendations rather than mass-market campaigns.
+
+### Analytical Limitations
+
+Association rules identify co-occurrence, not causality or travel sequence.
+
+The analysis uses anonymized city identifiers, preventing direct geographical interpretation without a city reference table.
+
+The historical dataset covers 2015–2017, and discovered patterns may not reflect current travel behavior.
+
+Recommendations should be evaluated using more recent data and controlled experiments before deployment.
