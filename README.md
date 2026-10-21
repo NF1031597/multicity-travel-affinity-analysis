@@ -104,3 +104,29 @@ This section will be completed after the analysis.
 ## 9. Limitations
 
 Potential limitations include popularity bias, data sparsity, low-frequency destination combinations, and the fact that association does not establish causation.
+
+
+
+### Destination Popularity and Data Sparsity
+
+The dataset contains 39,901 distinct destination city identifiers across 217,686 unique trips.
+
+The most frequently booked destination, City ID 23921, appears in 8,205 trips, representing 3.769% of all transactions.
+
+The city frequency distribution is highly sparse:
+
+- 12,349 cities (30.9%) appear in only one trip.
+- 30,605 cities (76.7%) appear in fewer than ten trips.
+- The most popular destination appears in approximately 3.77% of transactions.
+
+These findings indicate a pronounced long-tail distribution in destination popularity, presenting challenges for frequent itemset discovery.
+
+### Frequent Itemset Mining
+
+An initial minimum support threshold of 0.1% (218 trips) was selected to explore frequent individual cities and city pairs.
+
+The analysis uses PySpark DataFrame transformations compatible with Databricks Free Edition.
+
+Cities that fail to meet the minimum support threshold are excluded from candidate pair generation. Pair support is calculated relative to all 217,686 original transactions.
+
+The resulting itemsets and threshold sensitivity will be evaluated before association rules are generated.
