@@ -224,8 +224,6 @@ Candidate triples were then checked against the trip-level transactions to calcu
 
 This strategy reduces unnecessary candidate generation and is compatible with Databricks Free Edition serverless compute.
 
-**Results:** To be added after execution and validation.
-
 ### Frequent Three-City Combinations
 
 The analysis evaluated 1,092 candidate three-city itemsets and identified **405 frequent combinations** meeting the minimum support threshold of 0.1%.
@@ -239,4 +237,18 @@ The strongest recurring three-city combination was:
 
 These findings demonstrate how association mining can extend beyond individual destination pairs to identify recurring multi-destination booking patterns.
 
+
+## Project Visualizations
+
+### Figure 1. Distribution of Cities per Trip
+
+![Distribution of Cities per Trip](figures/trip_size_distribution.png)
+
+### Figure 2. Top 15 Destination Cities
+
+![Top 15 Destination Cities](figures/top_15_destination_cities.png)
+
+### Figure 3. Frequent Three-City Combinations
+
 ![Top 10 Frequent Three-City Combinations](figures/top_10_frequent_city_triples.png)
+
