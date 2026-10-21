@@ -130,3 +130,22 @@ The analysis uses PySpark DataFrame transformations compatible with Databricks F
 Cities that fail to meet the minimum support threshold are excluded from candidate pair generation. Pair support is calculated relative to all 217,686 original transactions.
 
 The resulting itemsets and threshold sensitivity will be evaluated before association rules are generated.
+
+
+### Frequent City Combinations
+
+Using a minimum support threshold of 0.1%, the analysis identified **969 frequent city pairs** across 217,686 unique trip transactions.
+
+The most frequent combination was City 55128 and City 64876, which appeared together in 4,022 trips (1.848% support).
+
+### Preliminary Association Insight
+
+For the rule **City 55128 → City 64876**:
+
+- Support: 1.85%
+- Confidence: 55.76%
+- Lift: 17.97
+
+The high lift indicates that these destinations co-occur much more frequently than would be expected from their individual booking frequencies under an independence assumption.
+
+These patterns could help identify candidates for personalized recommendations or destination bundles. However, the findings do not establish causal relationships or prove that these recommendations would increase bookings.
