@@ -213,3 +213,15 @@ The analysis uses anonymized city identifiers, preventing direct geographical in
 The historical dataset covers 2015–2017, and discovered patterns may not reflect current travel behavior.
 
 Recommendations should be evaluated using more recent data and controlled experiments before deployment.
+
+### Frequent 3-Itemset Mining
+
+Frequent three-city combinations were investigated using an Apriori-inspired candidate-generation approach implemented with PySpark DataFrames.
+
+Candidate triples were generated from frequent city pairs. A three-city combination was considered eligible only if all its constituent pairs met the 0.1% minimum support threshold.
+
+Candidate triples were then checked against the trip-level transactions to calculate their actual frequency and support.
+
+This strategy reduces unnecessary candidate generation and is compatible with Databricks Free Edition serverless compute.
+
+**Results:** To be added after execution and validation.
